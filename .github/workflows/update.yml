@@ -54,7 +54,8 @@ jobs:
           cache-version: 1
       - name: Run bash scripts1
         run: |
-          ls -al ./metadata
+          git submodule update --init --recursive
+          ls -al ./metadata/journals
 
       - name: Run bash scripts2
         run: |

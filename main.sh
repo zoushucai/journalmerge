@@ -5,7 +5,6 @@ git config user.email 1228075512@qq.com
 
 check_submodule() {
     # 获取子模块列表
-    git submodule update --remote
     submodules=$(git submodule | awk '{print $2}')
 
     # 遍历每个子模块
