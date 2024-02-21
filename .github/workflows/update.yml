@@ -52,6 +52,10 @@ jobs:
         with:
           cache: true
           cache-version: 1
-      - name: Run bash scripts
+      - name: Run bash scripts1
+        run: |
+          ls -al ./metadata
+
+      - name: Run bash scripts2
         run: |
           bash ./main.sh
