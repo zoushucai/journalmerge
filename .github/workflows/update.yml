@@ -40,20 +40,11 @@ jobs:
           use-public-rspm: true
       - run: Rscript -e 'install.packages(c("stringr", "tibble","data.table","stringr", "purrr", "usethis"))'
 
-      - name: Cache R dependencies
-        uses: actions/cache@v2
-        with:
-          path: ${{ env.R_LIBS_USER }}
-          key: ${{ runner.os }}-R-${{ hashFiles('**/DESCRIPTION') }}
-          restore-keys: |
-            ${{ runner.os }}-R-
-      - name: Setup R dependencies
-        uses: r-lib/actions/setup-r-dependencies@v2
-        with:
-          cache: true
-          cache-version: 1
       - name: Run bash scripts1
         run: |
+          conda env list
+          conda activate test
+          conda env list
           git submodule update --init --recursive
           ls -al ./metadata/journals
 
