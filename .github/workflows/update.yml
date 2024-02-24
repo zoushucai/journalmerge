@@ -42,11 +42,10 @@ jobs:
 
       - name: Run bash scripts1
         run: |
-          conda env list
-          conda activate test
-          conda env list
           git submodule update --init --recursive
           ls -al ./metadata/journals
 
       - name: Run bash scripts2
-        run: bash ./main.sh
+        run: |
+          ls -al
+          bash ./main.sh
