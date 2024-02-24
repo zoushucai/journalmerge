@@ -41,7 +41,7 @@ jobs:
       - run: Rscript -e 'install.packages(c("stringr", "tibble","data.table","stringr", "purrr", "usethis"))'
 
       - name: Cache R dependencies
-        uses: actions/cache@v3
+        uses: actions/cache@v2
         with:
           path: ${{ env.R_LIBS_USER }}
           key: ${{ runner.os }}-R-${{ hashFiles('**/DESCRIPTION') }}
@@ -58,5 +58,4 @@ jobs:
           ls -al ./metadata/journals
 
       - name: Run bash scripts2
-        run: ./main.sh
-        shell: bash
+        run: bash ./main.sh
