@@ -20,10 +20,21 @@ setwd(current_dir)
 cat(stringr::str_glue("\n===== 当前工作目录为: {getwd()} ====\n"))
 
 
-combine_journal_lists <- function(csvdir = "./metadata/journals/", format = c("rda", "js"), jspath = "./data.ts") {
-  library(data.table)
-  library(purrr)
-  library(stringr)
+combine_journal_lists <- function(csvdir = file.path(".", "metadata", "journals"), format = c("rda", "js"), jspath = "./data.ts") {
+  if (!require("pacman")) install.packages("pacman")
+  pacman::p_load(data.table, purrr, stringr)
+  
+  remove_trailing_separator <- function(input_path) {
+    # get the system separator
+    system_separator <- .Platform$file.sep
+    if (substr(input_path, nchar(input_path), nchar(input_path)) == system_separator) {
+      input_path <- substr(input_path, 1, nchar(input_path) - 1)
+    }
+    return(input_path)
+  }
+  csvdir <- remove_trailing_separator(csvdir)
+  
+  
   # check input
   if (!is.character(csvdir) || !is.character(format) || !is.character(jspath)) {
     stop("The input parameter must be a character type.")
@@ -37,7 +48,8 @@ combine_journal_lists <- function(csvdir = "./metadata/journals/", format = c("r
     ~file, ~weight,
     "./woodward_library_new.csv", 2,
     "./metadata/journals/journal_abbreviations_acs.csv", 3,
-    "./metadata/journals/journal_abbreviations_aea.csv", 3, # 新增
+    "./metadata/journals/journal_abbreviations_aea.csv", 3,
+    "./metadata/journals/journal_abbreviations_astronomy.csv", 3,
     "./metadata/journals/journal_abbreviations_ams.csv", 3,
     "./metadata/journals/journal_abbreviations_annee-philologique.csv", 3,
     "./metadata/journals/journal_abbreviations_dainst.csv", 3,
@@ -45,7 +57,6 @@ combine_journal_lists <- function(csvdir = "./metadata/journals/", format = c("r
     "./metadata/journals/journal_abbreviations_general.csv", 3,
     "./metadata/journals/journal_abbreviations_geology_physics_variations.csv", 3,
     "./metadata/journals/journal_abbreviations_geology_physics.csv", 3,
-    # "./metadata/journals/journal_abbreviations_ieee_strings.csv", 3,
     "./metadata/journals/journal_abbreviations_ieee.csv", 3,
     "./metadata/journals/journal_abbreviations_lifescience.csv", 3,
     "./metadata/journals/journal_abbreviations_mathematics.csv", 3,
@@ -53,12 +64,18 @@ combine_journal_lists <- function(csvdir = "./metadata/journals/", format = c("r
     "./metadata/journals/journal_abbreviations_medicus.csv", 3,
     "./metadata/journals/journal_abbreviations_meteorology.csv", 3,
     "./metadata/journals/journal_abbreviations_sociology.csv", 3,
-    "./metadata/journals/journal_abbreviations_webofscience.csv", 3,
+    "./metadata/journals/journal_abbreviations_webofscience-dotless.csv", 3,
     "./metadata/journals/journal_abbreviations_webofscience-dots.csv", 3,
+  )
+
+  exclude_files <- c(
+    "./metadata/journals/journal_abbreviations_ieee_strings.csv"
   )
   # automatically add new files
   newfile <- list.files(path = csvdir, pattern = "\\.csv",  full.names = T)
+  newfile <- newfile[!newfile %in% exclude_files]
   newfile_diff <- setdiff(newfile, filedf$file)
+  print(stringr::str_glue("New files: {newfile_diff}"))
   if (length(newfile_diff) > 0) {
     for (i in newfile_diff) {
       filedf <- tibble::add_row(filedf, file = i, weight = 3)
@@ -77,7 +94,7 @@ combine_journal_lists <- function(csvdir = "./metadata/journals/", format = c("r
       dt_list[[k]][, "originFile" := i]
       k <- k + 1
     } else {
-      print(stringr::str_glue("i={i}"))
+      print(stringr::str_glue("file not exists: {i}"))
     }
   }
 
@@ -173,4 +190,4 @@ combine_journal_lists <- function(csvdir = "./metadata/journals/", format = c("r
   }
 }
 
-combine_journal_lists(csvdir = "./metadata/journals/", format = "js", jspath = "./data_new.ts")
+combine_journal_lists(csvdir = file.path(".", "metadata", "journals"), format = "js", jspath = "./data_new.ts")

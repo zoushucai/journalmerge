@@ -6,6 +6,7 @@ git submodule update --remote
 
 git clone --recursive https://github.com/zoushucai/journalmerge.git
 
+git submodule update --init --recursive
 ```
 
 ## 合并期刊简写
