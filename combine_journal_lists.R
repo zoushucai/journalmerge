@@ -162,7 +162,7 @@ combine_journal_lists <- function(csvdir = "./metadata/journals/", format = c("r
     # output js file, for zotero-journalabbr repo
     cat("const journal_abbr = {\n  ", file = jspath, append = F, sep = "")
 
-    s0 <- dtf[, paste0('"', journal_lower, '":"', journal_abbr, '"')]
+    s0 <- dtf[, paste0('"', journal_lower, '": "', journal_abbr, '"')]
     cat(s0, file = jspath, append = T, sep = ",\n  ")
 
     cat("};\n\nexport { journal_abbr };", file = jspath, append = T, sep = "")
