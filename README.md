@@ -1,3 +1,9 @@
+## 数据来源
+- [JabRef/abbrv.jabref.org](https://github.com/JabRef/abbrv.jabref.org/)
+- [the university of british Columbia](https://woodward.library.ubc.ca/woodward/research-help/journal-abbreviations/)
+
+只做数据的搬运工, 按照某些规则, 对数据进行筛选,去重等工作, 形成一张缩写对照表. 
+
 ## 利用子模块
 
 ```bash
