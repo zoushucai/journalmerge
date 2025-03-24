@@ -44,6 +44,7 @@ jobs:
         run: |
           git submodule update --init --recursive
           ls -al ./metadata/journals
+          # 触发更新
 
       - name: Run bash scripts2
         run: |
