@@ -36876,6 +36876,7 @@ const journal_abbr = {
   "physiology teacher": "Physiol. Teach.",
   "physiotherapy research international": "Physiother. Res. Int.",
   "phytomedicine": "Phytomedicine",
+  "plant cell environment": "Plant Cell Environ.",
   "plastic surgical nursing": "Plast. Surg. Nurs.",
   "plucne bolesti": "Plucne Bolesti",
   "plugger; iowa dental assistants journal": "Plugger.",
